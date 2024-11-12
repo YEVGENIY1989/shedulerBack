@@ -1,6 +1,6 @@
 from flask import Flask
 from controller.BookingController import booking
-from model.BookingTimeModel import db
+from model.ShedulerModel import db
 
 def setupApp():
     app = Flask(__name__)

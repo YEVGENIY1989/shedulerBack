@@ -1,5 +1,5 @@
 from app import appSheduler
-from model.BookingTimeModel import db
+from src.model.ShedulerModel import db
 
 with appSheduler.app_context():
       db.create_all()
