@@ -10,6 +10,9 @@ class BookingTimeServices:
         db.session.commit()
         return "s"
     
-    def get_all_bookingResponse(self, db):
-        btm = 0
-        print(btm)
+    def get_all_bookingResponse(self, db, start, end):
+        # listShedulerTime = db.session.query(BookingTimeModel).filter(BookingTimeModel.start.between(start, end))
+        listShedulerTime = BookingTimeModel.query.filter(BookingTimeModel.start.between(start, end)).all()
+        for sheduler in listShedulerTime:
+            print(sheduler.description + " " + sheduler.id)
+        return listShedulerTime

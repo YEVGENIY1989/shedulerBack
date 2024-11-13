@@ -20,10 +20,13 @@ def bookingTimePost():
 @booking.route('/getAllBooking', methods=['POST'])
 def getAllBooking():
     step_time = request.json
-    print(step_time)
-    return Response("success", status=200)
-    # bookingTime = BookingTimeServices() 
-    # return Response(bookingTime.get_all_bookingResponse(db), status=200)
+    start = step_time['start']
+    end = step_time['end']
+    bookingTime = BookingTimeServices()
+    shedulerTime = bookingTime.get_all_bookingResponse(db, start, end)
+    for sheduler in shedulerTime:
+        print(sheduler.description + " " + sheduler.id) 
+    return Response(status=200)
 
 @booking.route('/test', methods=['GET'])
 def test():

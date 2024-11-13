@@ -15,8 +15,7 @@ class BookingTimeModel(db.Model):
         self.summary = summary
         self.description = description
 
-    def __str__(self):
-        return self.start + " " + self.end + " " + self.summary + " " + self.description
+
 class Booking(db.Model):
     __tablename__ = 'bokking'
     id = db.Column(db.Integer, primary_key=True)
