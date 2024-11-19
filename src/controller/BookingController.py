@@ -24,9 +24,23 @@ def getAllBooking():
     end = step_time['end']
     bookingTime = BookingTimeServices()
     shedulerTime = bookingTime.get_all_bookingResponse(db, start, end)
-    for sheduler in shedulerTime:
-        print(sheduler.description + " " + sheduler.id) 
-    return Response(status=200)
+    return shedulerTime, 200
+
+@booking.route('/deleteBooking', methods=['GET'])
+def deleteBooking():
+    id = request.args.get('id')
+    bookingTime = BookingTimeServices()
+    bookingTime.delete_from_bookingResponse(id, db)
+    return Response("success", status=200)
+
+@booking.route('/updateBooking', methods=['POST'])
+def updateBooking():
+    temp = json.loads(request.data)
+    id = request.args.get('id')
+    booking = BookingTimeModel(**temp)
+    bookingTime = BookingTimeServices() 
+    bookingTime.update_from_bookingResponse(id, db, booking)
+    return Response("success", status=200)
 
 @booking.route('/test', methods=['GET'])
 def test():
