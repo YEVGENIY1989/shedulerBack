@@ -54,3 +54,14 @@ class Booking(db.Model):
     def __str__(self):
         return self.name
     
+class TypeOfProcedure(db.Model):
+    __tablename__ = 'type_of_procedure'
+    id = db.Column(db.Integer, primary_key=True)
+    duration = db.Column(db.Integer)
+    name_of_procedure = db.Column(db.String)
+    price = db.Column(db.Integer)
+    def __init__(self, duration, name_of_procedure, price):
+        self.duration = duration
+        self.name_of_procedure = name_of_procedure
+        self.price = price    
+    
