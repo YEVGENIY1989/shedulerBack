@@ -6,7 +6,7 @@ from model.ShedulerModel import db
 
 def setupApp():
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:89052809585Leti@localhost:5432/postgres'
+    app.config["SQLALCHEMY_DATABASE_URI"] = 'postgresql://postgres:pass@localhost:5432/db'
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     app.register_blueprint(booking)
