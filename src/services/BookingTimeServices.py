@@ -5,6 +5,8 @@ from model.ShedulerModel import BookingTimeModel
 
 class BookingTimeServices:
 
+    def __init__(self):
+        pass
         
     def add_to_bookingResponse(self, bookingTimeResponse, db):
         db.session.add(bookingTimeResponse)
@@ -27,5 +29,6 @@ class BookingTimeServices:
         return "success"
     
     def find_by_id(self, id, db):
-        return BookingTimeModel.query.filter_by(id=id).first()
+        typeOfProcedure = jsonify(BookingTimeModel.query.filter_by(id=id).first())
+        return typeOfProcedure
     

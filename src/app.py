@@ -1,5 +1,7 @@
 from flask import Flask
 from controller.BookingController import booking
+from controller.ServiceController import service
+from controller.UserController import user
 from model.ShedulerModel import db
 
 def setupApp():
@@ -8,6 +10,8 @@ def setupApp():
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
     app.register_blueprint(booking)
+    app.register_blueprint(service)
+    app.register_blueprint(user)
     return app
 
 

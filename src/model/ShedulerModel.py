@@ -2,6 +2,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+user_massages = db.Table('user_massages',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('massage_id', db.Integer, db.ForeignKey('massage.id'))
+)
+
 class BookingTimeModel(db.Model):
     __tablename__ = 'bookingTime'
     id = db.Column(db.Integer, primary_key=True) 
@@ -29,20 +34,39 @@ class BookingTimeModel(db.Model):
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String)
-    email = db.Column(db.String)
-    telephone = db.Column(db.String)
-    def __init__(self, full_name = None, email = None, telephone = None):
-        self.full_name = full_name
-        self.email = email        
-        self.telephone = telephone
+    name = db.Column(db.String)
+    phone = db.Column(db.String)
+    massages = db.relationship('Massage', secondary=user_massages, back_populates='users')
+    def __init__(self, name = None,  phone = None):
+        self.name = name
+        self.phone = phone
 
     def as_dict(self):
         return {
-            'full_name': self.full_name,
-            'email': self.email,
-            'telephone': self.telephone
+            'name': self.name,
+            'phone': self.phone
         }
+
+class Massage(db.Model):
+    __tablename__ = 'massage'
+    id = db.Column(db.Integer, primary_key=True)
+    duration = db.Column(db.Integer)
+    name_of_procedure = db.Column(db.String)
+    price = db.Column(db.Integer)
+    users = db.relationship('User', secondary=user_massages, back_populates='massages')
+    def __init__(self, id = None, duration = None, name_of_procedure = None, price = None):
+        self.id = id
+        self.duration = duration
+        self.name_of_procedure = name_of_procedure
+        self.price = price
+
+    def as_dict(self):
+        return {
+            'duration': self.duration,
+            'name_of_procedure': self.name_of_procedure,
+            'price': self.price
+    }
+
 
 class Booking(db.Model):
     __tablename__ = 'bokking'
@@ -54,14 +78,4 @@ class Booking(db.Model):
     def __str__(self):
         return self.name
     
-class TypeOfProcedure(db.Model):
-    __tablename__ = 'type_of_procedure'
-    id = db.Column(db.Integer, primary_key=True)
-    duration = db.Column(db.Integer)
-    name_of_procedure = db.Column(db.String)
-    price = db.Column(db.Integer)
-    def __init__(self, duration, name_of_procedure, price):
-        self.duration = duration
-        self.name_of_procedure = name_of_procedure
-        self.price = price    
-    
+
